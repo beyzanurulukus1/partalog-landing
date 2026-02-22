@@ -1,0 +1,78 @@
+/* 1. KÜTÜPHANE IMPORTLARI */
+@import 'aos/dist/aos.css';
+
+/* 2. TAILWIND KATMANLARI */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 3. GENEL SİTE STİLLERİ */
+body, html {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* Başlıklar için özel font tanımları */
+.font-heading {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* 4. PREMIUM TASARIM ELEMENTLERİ (Glassmorphism) */
+.glass-card {
+  @apply bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_20px_50px_-12px_rgba(47,68,95,0.08)];
+}
+
+/* Endüstriyel Noktalı Arkaplan Dokusu */
+.bg-dot-pattern {
+  background-image: radial-gradient(#2f445f1a 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Yüzen Nesne Animasyonu (Telefon için) */
+@keyframes float {
+  0% { transform: translateY(12px) scale(0.9); }
+  50% { transform: translateY(-5px) scale(0.92); }
+  100% { transform: translateY(12px) scale(0.9); }
+}
+
+.animate-float-phone {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Tekilleştirilmiş Mesh Glow Efekti */
+.glow-orb {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(47,68,95,0.07) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Yazıdaki Lacivert Vurguyu Güçlendirmek İçin */
+.text-gradient-brand {
+  background: linear-gradient(135deg, #2f445f 0%, #4a6a91 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Vurgusu */
+.hero-glass-box {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(47, 68, 95, 0.12);
+}
+
+/* Mobil Menü Açılış Animasyonu */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.3s ease-out forwards;
+}

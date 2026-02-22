@@ -1,0 +1,50 @@
+<section class="py-24 bg-white" id="faq">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center mb-16" data-aos="fade-down">
+      <h2 class="font-heading text-4xl font-bold text-[#2f445f] sm:text-5xl tracking-tight">
+        {{ ts.currentLang() === 'tr' ? 'Sıkça Sorulan Sorular' : 'Frequently Asked Questions' }}
+      </h2>
+      <p class="mt-6 text-gray-500 font-body text-xl sm:text-2xl leading-relaxed max-w-3xl mx-auto">
+        {{ ts.currentLang() === 'tr' ? 'Partalog teknolojisi, kullanımı ve entegrasyon süreçleri hakkında merak edilenler.' : 'Frequently asked questions about Partalog technology, usage, and integration processes.' }}
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      
+      <div *ngFor="let item of faqs; let i = index" 
+           data-aos="fade-up"
+           [attr.data-aos-delay]="i * 100"
+           class="border border-gray-200 rounded-xl bg-gray-50/30 hover:bg-gray-50 transition-all duration-300 overflow-hidden group">
+        
+        <button (click)="toggleFaq(i)" 
+                [attr.aria-expanded]="item.isOpen"
+                [attr.aria-controls]="'faq-answer-' + i"
+                class="flex items-start w-full p-6 text-left select-none focus:outline-none focus:ring-2 focus:ring-[#2f445f] focus:ring-inset rounded-xl transition-shadow">
+          
+          <div class="flex-shrink-0 mr-5 mt-1">
+            <div class="w-8 h-8 rounded-full bg-[#2f445f]/10 flex items-center justify-center text-[#2f445f] transition-all duration-500 group-hover:bg-[#2f445f] group-hover:text-white"
+                 [ngClass]="{'rotate-180 bg-[#2f445f] text-white': item.isOpen}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+          </div>
+          
+          <span class="font-heading font-bold text-lg text-gray-800 group-hover:text-[#2f445f] transition-colors pt-1">
+            {{ ts.currentLang() === 'tr' ? item.qTr : item.qEn }}
+          </span>
+        </button>
+
+        <div [id]="'faq-answer-' + i" *ngIf="item.isOpen" class="px-6 pb-8 pl-[4.5rem] animate-fade-in-down">
+          <p class="font-body text-gray-600 leading-relaxed text-base border-l-2 border-[#2f445f]/20 pl-4">
+            {{ ts.currentLang() === 'tr' ? item.aTr : item.aEn }}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>

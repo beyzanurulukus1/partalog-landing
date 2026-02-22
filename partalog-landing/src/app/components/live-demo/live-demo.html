@@ -1,0 +1,65 @@
+<section class="py-24 bg-gray-50/50 border-b border-gray-100 relative overflow-hidden" id="features">
+  
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-[#2f445f]/5 blur-3xl rounded-full pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <div class="text-center mb-16 lg:mb-24" data-aos="fade-up">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 mb-6 shadow-sm transition-transform hover:scale-105">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <span class="text-[11px] font-bold text-gray-600 tracking-[0.15em] uppercase">
+          {{ ts.currentLang() === 'tr' ? 'NEDEN PARTALOG?' : 'WHY PARTALOG?' }}
+        </span>
+      </div>
+      
+      <h2 class="font-heading text-4xl font-extrabold text-gray-900 sm:text-5xl tracking-tight leading-tight">
+        {{ ts.currentLang() === 'tr' ? 'Saha Operasyonlarınızı' : 'Accelerate Field Operations' }} <br class="hidden sm:block" />
+        <span class="text-[#2f445f]">
+          {{ ts.currentLang() === 'tr' ? 'Partalog ile Hızlandırın' : 'with Partalog' }}
+        </span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+      
+      <div *ngFor="let item of features; let i = index" 
+           class="group relative min-h-[420px] rounded-[2.5rem] p-8 lg:p-10 overflow-hidden cursor-pointer transition-all duration-500 ease-out flex flex-col items-center justify-center text-center border"
+           [ngClass]="i === 1 ? 'bg-white border-gray-100 text-[#2f445f] shadow-2xl scale-100 md:scale-105 z-10' : 'bg-[#1e2e42] border-transparent text-white shadow-xl hover:shadow-2xl opacity-95 hover:opacity-100'"
+           data-aos="fade-up" 
+           [attr.data-aos-delay]="i * 150">
+        
+        <div *ngIf="i !== 1" class="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-40"></div>
+
+        <div class="relative z-10 flex flex-col items-center w-full transition-transform duration-500 lg:group-hover:-translate-y-8">
+          
+          <div class="w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-transform duration-500 lg:group-hover:scale-110"
+               [ngClass]="i === 1 ? 'bg-blue-50/80 text-[#2f445f]' : 'bg-white/10 text-white'">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" [attr.d]="item.icon" />
+            </svg>
+          </div>
+
+          <p class="text-[10px] font-bold tracking-[0.2em] uppercase mb-3 opacity-60">
+            PARTALOG
+          </p>
+
+          <h3 class="font-heading text-2xl lg:text-3xl font-bold tracking-tight mb-4">
+            {{ ts.currentLang() === 'tr' ? item.titleTr : item.titleEn }}
+          </h3>
+
+          <div class="w-12 h-1 rounded-full mb-6 transition-all duration-500 opacity-50 lg:group-hover:w-16 lg:group-hover:opacity-100"
+               [ngClass]="i === 1 ? 'bg-[#2f445f]/30' : 'bg-white/30'"></div>
+
+          <div class="overflow-hidden transition-all duration-500 max-h-40 opacity-100 lg:max-h-0 lg:opacity-0 lg:group-hover:max-h-40 lg:group-hover:opacity-100 w-full px-2">
+            <p class="font-body text-base lg:text-lg leading-relaxed"
+               [ngClass]="i === 1 ? 'text-gray-600' : 'text-gray-300'">
+              {{ ts.currentLang() === 'tr' ? item.descTr : item.descEn }}
+            </p>
+          </div>
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
