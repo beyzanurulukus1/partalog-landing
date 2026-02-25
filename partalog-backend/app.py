@@ -24,7 +24,11 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 logging.basicConfig(level=logging.INFO)
 
 # 1. GÜVENLİ CORS
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:4200", "https://partalog.tech"]}})
+CORS(app, resources={r"/api/*": {"origins": [
+    "http://localhost:4200", 
+    "https://partalog.tech", 
+    "https://www.partalog.tech"
+]}})
 
 # 2. DENGELİ SPAM KORUMASI
 limiter = Limiter(
