@@ -39,7 +39,6 @@ export class ContactComponent {
       this.errorMessage = ''; 
       this.cdr.detectChanges();
 
-      // DİKKAT: website_url eklendi!
       const payload = {
         name: this.formData.name,
         email: this.formData.email,
@@ -53,7 +52,8 @@ export class ContactComponent {
           this.zone.run(() => {
             this.isSending = false;
             this.isSent = true; 
-            console.log("Form başarıyla işlendi:", response.message); 
+            
+            // YENİ (P3): Prod ortamı için gereksiz console.log kaldırıldı.
             
             this.formData = { name: '', email: '', company: '', description: '', website_url: '' }; 
             this.cdr.detectChanges();
@@ -67,7 +67,8 @@ export class ContactComponent {
         error: (err) => {
           this.zone.run(() => {
             this.isSending = false;
-            console.error('Backend Hatası:', err);
+            
+            // YENİ (P3): Prod ortamı için detaylı hata ifşası (console.error) kaldırıldı.
             
             if (err.error && err.error.error) {
               this.errorMessage = err.error.error;

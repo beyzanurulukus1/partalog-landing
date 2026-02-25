@@ -2,13 +2,25 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from werkzeug.middleware.proxy_fix import ProxyFix  
 import requests
 import re
 import logging
+import os  # YENİ: Ortam değişkenlerini (çevre değişkenlerini) okumak için
+from dotenv import load_dotenv  # YENİ: .env dosyasını yüklemek için
+
+# YENİ: Gizli kasamızı (.env dosyasını) açıp içindekileri okuyoruz
+load_dotenv()
 
 app = Flask(__name__)
 
-# Loglama ayarları (Kişisel veri içermeyen güvenli loglama)
+# (P1): Maksimum Payload Limiti (16 KB). Sunucu belleğini şişiren saldırıları engeller.
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 
+
+# (P2): Reverse Proxy arkasında (Render/Vercel) IP limitinin doğru çalışması için.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
+# Loglama ayarları
 logging.basicConfig(level=logging.INFO)
 
 # 1. GÜVENLİ CORS
@@ -24,18 +36,27 @@ limiter = Limiter(
 @app.errorhandler(429)
 def ratelimit_handler(e):
     return jsonify({
-        "error": "Günlük maksimum demo talebi sınırına ulaştınız. Lütfen doğrudan demo@partalog.com adresi üzerinden iletişime geçin."
+        "error": "Günlük maksimum demo talebi sınırına ulaştınız. Lütfen doğrudan info@partalog.tech adresi üzerinden iletişime geçin."
     }), 429
 
-GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznESMXdkdjzOBs-_ubkuRw43CoUOWTsUyo-r0UnvnPqArlx4tDiVSinTslbb4BRAAI4g/exec"
+# YENİ: URL artık kodun içinde açıkça YAZMIYOR! Gizli .env dosyasından çekiliyor.
+GOOGLE_SCRIPT_URL = os.getenv("GOOGLE_SCRIPT_URL")
 
 def is_valid_email(email):
     pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
     return re.match(pattern, email)
 
+# (P1): Spreadsheet Formula Injection Koruması
+def sanitize_for_sheets(value):
+    if not value:
+        return ""
+    val = str(value).strip()
+    if val.startswith(('=', '+', '-', '@')):
+        return "'" + val
+    return val
+
 @app.route('/api/contact', methods=['POST'])
 def contact():
-    # YENİ 1: Content-Type kontrolü (Sadece JSON kabul et, erken reddet)
     if not request.is_json:
         logging.warning(f"Geçersiz Content-Type: {request.content_type}")
         return jsonify({"error": "Sadece JSON formatı desteklenmektedir."}), 415
@@ -44,11 +65,11 @@ def contact():
     if not data:
         return jsonify({"error": "Geçersiz veya eksik veri formatı."}), 400
 
-    # 3. HAM VERİ
-    name = data.get('name', '').strip()
-    email = data.get('email', '').strip()
-    company = data.get('company', '').strip()
-    description = data.get('description', '').strip()
+    # 3. HAM VERİ VE FORMÜL ENJEKSİYON TEMİZLİĞİ
+    name = sanitize_for_sheets(data.get('name', ''))
+    email = sanitize_for_sheets(data.get('email', ''))
+    company = sanitize_for_sheets(data.get('company', ''))
+    description = sanitize_for_sheets(data.get('description', ''))
     
     # 4. HONEYPOT (BOT) KONTROLÜ
     website_url = data.get('website_url', '').strip()
@@ -69,6 +90,11 @@ def contact():
     if not is_valid_email(email):
         return jsonify({"error": "Geçersiz e-posta formatı tespit edildi."}), 400
 
+    # YENİ: Güvenlik Kontrolü - Eğer .env dosyası eksikse veya link çekilemediyse durdur!
+    if not GOOGLE_SCRIPT_URL:
+        logging.error("KRİTİK HATA: GOOGLE_SCRIPT_URL bulunamadı! Lütfen .env dosyasını kontrol edin.")
+        return jsonify({"error": "Sunucu yapılandırma hatası."}), 500
+
     # 6. GOOGLE SHEETS'E GÜVENLİ AKTARIM
     payload = {
         "Ad Soyad": name,
@@ -80,7 +106,6 @@ def contact():
     try:
         response = requests.post(GOOGLE_SCRIPT_URL, data=payload, timeout=10)
         
-        # YENİ 2: Sadece 200 değil, tüm 2xx başarılı kodları kapsama
         if 200 <= response.status_code < 300:
             return jsonify({"success": True, "message": "Talebiniz başarıyla alındı."}), 200
         else:
@@ -90,7 +115,6 @@ def contact():
     except requests.exceptions.Timeout:
         logging.error("Google Sheets bağlantısı zaman aşımına uğradı.")
         return jsonify({"error": "Sunucu yanıt vermedi (Zaman aşımı). Lütfen tekrar deneyin."}), 504
-    # YENİ 3: Genel request hatalarını (DNS, Connection vb.) yakalama
     except requests.exceptions.RequestException as e:
         logging.error(f"Upstream request error: {str(e)}")
         return jsonify({"error": "Harici servis hatası."}), 502

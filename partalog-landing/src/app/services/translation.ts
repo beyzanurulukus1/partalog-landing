@@ -1,10 +1,24 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, effect, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
-  currentLang = signal<'tr' | 'en'>('tr');
+  currentLang = signal<'tr' | 'en'>('en'); // Varsayılan dil İngilizce
+
+  // YENİ: Başlık ve doküman servisleri içeri aktarıldı
+  private titleService = inject(Title);
+  private document = inject(DOCUMENT);
+
+  constructor() {
+    // YENİ: Dil değiştiği an burası tetiklenip sekmeyi ve HTML dilini güncelleyecek
+    effect(() => {
+      this.titleService.setTitle(this.t.pageTitle);
+      this.document.documentElement.lang = this.currentLang();
+    });
+  }
 
   toggleLang() {
     this.currentLang.update(lang => lang === 'tr' ? 'en' : 'tr');
@@ -16,6 +30,7 @@ export class TranslationService {
 
   private translations = {
     tr: {
+      pageTitle: 'Partalog | Akıllı Parça Yönetimi', // TÜRKÇE SEKME BAŞLIĞI
       nav: {
         solutions: 'Çözümler',
         howItWorks: 'Nasıl Çalışır?',
@@ -58,11 +73,11 @@ export class TranslationService {
         about: 'Hakkımızda',
         careers: 'Kariyer',
         blog: 'Blog',
-        comingSoon: 'Yakında' // YENİ EKLENDİ
+        comingSoon: 'Yakında'
       },
       contact: {
         title: 'Demo Talep Edin',
-        subtitle: 'Süreçlerinizi nasıl hızlandırabileceğimizi göstermek için sabırsızlanıyoruz.',
+        subtitle: 'Görsel arama teknolojimizin manuel katalog taramayı nasıl ortadan kaldırdığını, tedarik süreçlerinizi nasıl hızlandırdığını ve ekibinizin tam olarak ihtiyaç duyduğu parçaları saniyeler içinde bulmasına nasıl yardımcı olduğunu size göstermek için sabırsızlanıyoruz.',
         name: 'Ad Soyad',
         email: 'E-posta Adresi',
         company: 'Şirket Adı',
@@ -72,6 +87,7 @@ export class TranslationService {
       }
     },
     en: {
+      pageTitle: 'Partalog | Smart Part Management', // İNGİLİZCE SEKME BAŞLIĞI
       nav: {
         solutions: 'Solutions',
         howItWorks: 'How it Works?',
@@ -114,11 +130,11 @@ export class TranslationService {
         about: 'About Us',
         careers: 'Careers',
         blog: 'Blog',
-        comingSoon: 'Coming Soon' // YENİ EKLENDİ
+        comingSoon: 'Coming Soon'
       },
       contact: {
         title: 'Request a Demo',
-        subtitle: 'We look forward to showing you how we can accelerate your processes.',
+        subtitle: 'We look forward to showing you how our visual search technology can eliminate manual catalog browsing, accelerate your procurement processes, and help your team find the exact parts they need in seconds.',
         name: 'Full Name',
         email: 'Email Address',
         company: 'Company Name',
