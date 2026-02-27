@@ -5,11 +5,11 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <div class="text-center mb-16 lg:mb-24" data-aos="fade-up">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 mb-6 shadow-sm transition-transform hover:scale-105">
-        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-        <span class="text-[11px] font-bold text-gray-600 tracking-[0.15em] uppercase">
-          {{ ts.currentLang() === 'tr' ? 'NEDEN PARTALOG?' : 'WHY PARTALOG?' }}
-        </span>
+      <div class="mb-6">
+        <p class="mt-2 text-[15px] md:text-[18px] font-semibold uppercase tracking-[0.06em] text-[#1e2e42]">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#4a6a91] shadow-[0_0_0_5px_rgba(74,106,145,0.16)] mr-2 align-middle"></span>
+          {{ ts.currentLang() === 'tr' ? '3 ADIMDA NEDEN PARTALOG?' : 'WHY PARTALOG IN 3 STEPS?' }}
+        </p>
       </div>
       
       <h2 class="font-heading text-4xl font-extrabold text-gray-900 sm:text-5xl tracking-tight leading-tight">
@@ -46,6 +46,15 @@
           <h3 class="font-heading text-2xl lg:text-3xl font-bold tracking-tight mb-4">
             {{ ts.currentLang() === 'tr' ? item.titleTr : item.titleEn }}
           </h3>
+
+          <div *ngIf="i === 1" class="flex items-center gap-2 mb-4">
+            <span class="text-[10px] uppercase tracking-[0.12em] font-bold px-2.5 py-1 rounded-full bg-[#2f445f]/10 text-[#2f445f] border border-[#2f445f]/20">
+              AI Chatbot
+            </span>
+            <span class="text-[10px] uppercase tracking-[0.12em] font-bold px-2.5 py-1 rounded-full bg-[#2f445f]/10 text-[#2f445f] border border-[#2f445f]/20">
+              Visual Search
+            </span>
+          </div>
 
           <div class="w-12 h-1 rounded-full mb-6 transition-all duration-500 opacity-50 lg:group-hover:w-16 lg:group-hover:opacity-100"
                [ngClass]="i === 1 ? 'bg-[#2f445f]/30' : 'bg-white/30'"></div>

@@ -37,10 +37,11 @@ export class TranslationService {
         demoBtn: 'Demo Talep Et'
       },
       hero: {
-        subtitle: 'ENDÜSTRİYEL PARÇA YÖNETİMİ',
-        titlePart1: 'Parçayı Gör,',
-        titlePart2: 'Anında Yönet.',
-        desc: 'Karmaşık katalog süreçlerini sonlandırın. Partalog\'un görsel tanıma teknolojisi ile saha operasyonlarınızı hızlandırın ve hata payını sıfırlayın.',
+        engineLabel: '',
+        subtitle: 'YAPAY ZEKA DESTEKLİ ENDÜSTRİYEL PARÇA YÖNETİMİ',
+        titlePart1: 'Kataloğunuzdan Akıllı E-Ticarete.',
+        titlePart2: 'Sadece Dakikalar İçinde.',
+        desc: 'Kendi yapay zeka motorunuzu eğitin. Görsel arama (Visual Search) ve akıllı Chatbot ile donatılmış dijital vitrininiz dakikalar içinde satışa hazır olsun. Müşterilerinizin doğru parçayı saniyeler içinde bulmasını sağlayarak hatalı siparişleri, iade süreçlerini ve kargo maliyetlerini kökten çözün.',
         btnTry: 'Platformu Deneyin',
         btnHow: 'Nasıl Çalışır?',
         note: '🚀 %99.8 Tanıma Doğruluğu ile Güçlendirildi.',
@@ -94,10 +95,11 @@ export class TranslationService {
         demoBtn: 'Request Demo'
       },
       hero: {
-        subtitle: 'INDUSTRIAL PART MANAGEMENT',
-        titlePart1: 'See the Part,',
-        titlePart2: 'Manage Instantly.',
-        desc: 'End complex catalog processes. Accelerate your field operations and eliminate errors with Partalog\'s visual recognition technology.',
+        engineLabel: '',
+        subtitle: 'AI-POWERED INDUSTRIAL PART MANAGEMENT',
+        titlePart1: 'From Your Catalog to Smart E-Commerce.',
+        titlePart2: 'In Just Minutes.',
+        desc: 'Train your own AI engine. Let your digital storefront, equipped with Visual Search and an intelligent Chatbot, become sales-ready in minutes. Enable your customers to find the right part in seconds and eliminate wrong orders, return workflows, and shipping costs at the root.',
         btnTry: 'Try Platform',
         btnHow: 'How it Works?',
         note: '🚀 Powered by 99.8% Recognition Accuracy.',

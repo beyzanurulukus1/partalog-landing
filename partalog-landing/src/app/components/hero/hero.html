@@ -1,22 +1,22 @@
-<section class="relative bg-white overflow-hidden border-b border-gray-100 pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-28">
+<section class="relative bg-white overflow-hidden border-b border-gray-100 pt-12 pb-16 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-28">
   <div class="glow-orb -top-20 -left-20 opacity-20"></div>
   <div class="absolute inset-x-0 top-0 h-0.5 bg-[#2f445f] shadow-[0_0_15px_#2f445f] animate-[scan_3s_ease-in-out_infinite]"></div>
   <div class="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col lg:flex-row items-center justify-between py-16 lg:py-20 gap-10">
+    <div class="group flex flex-col lg:flex-row items-center justify-between py-16 lg:py-20 gap-10">
       
       <div class="lg:w-1/2 mb-10 lg:mb-0 relative z-30" data-aos="fade-right">
-        <div class="bg-white/80 backdrop-blur-2xl p-8 sm:p-12 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(47,68,95,0.1)] border border-white/50 relative overflow-hidden">
+        <div class="bg-white/80 backdrop-blur-2xl p-8 sm:p-12 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(47,68,95,0.1)] border border-white/50 relative overflow-hidden transition-all duration-500 group-hover:bg-white/95 group-hover:border-[#2f445f]/20 group-hover:shadow-[0_38px_75px_-18px_rgba(47,68,95,0.24)]">
           <div class="absolute top-0 right-0 w-32 h-32 bg-[#2f445f]/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
 
           <div class="relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2f445f]/5 border border-[#2f445f]/10 mb-6">
-              <span class="w-2 h-2 rounded-full bg-[#2f445f] animate-pulse"></span>
-              <span class="text-[11px] font-bold text-[#2f445f] tracking-[0.15em] uppercase">
-                {{ ts.t.hero.subtitle }}
-              </span>
+            <div class="ai-section mb-6 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0">
+              <p class="ai-heading">
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#4a6a91] shadow-[0_0_0_5px_rgba(74,106,145,0.16)] mr-2 align-middle"></span>
+                <span class="ai-highlight">AI</span>{{ ts.currentLang() === 'tr' ? ' Destekli Endüstriyel Parça Yönetimi' : '-Powered Industrial Part Management' }}
+              </p>
             </div>
 
-            <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase leading-[1.1] tracking-tight text-gray-900">
+            <h1 class="font-heading text-[21px] sm:text-[27px] md:text-[39px] lg:text-[51px] font-extrabold uppercase leading-[1.1] tracking-tight text-gray-900">
               <span class="block">{{ ts.t.hero.titlePart1 }}</span>
               <span class="block text-[#2f445f]">{{ ts.t.hero.titlePart2 }}</span>
             </h1>
@@ -26,7 +26,7 @@
             </p>
 
             <div class="mt-10 flex flex-col sm:flex-row gap-4">
-              <a href="#contact" class="px-8 py-4 bg-[#2f445f] text-white text-sm font-bold rounded-sm hover:bg-[#1e2e42] transition-all transform hover:-translate-y-1 shadow-lg flex items-center justify-center">
+              <a href="#plans" class="px-8 py-4 bg-[#2f445f] text-white text-sm font-bold rounded-sm hover:bg-[#1e2e42] transition-all transform hover:-translate-y-1 shadow-lg flex items-center justify-center">
                 {{ ts.t.hero.btnTry }}
               </a>
               <a href="#features" class="px-8 py-4 border-2 border-gray-100 text-sm font-bold rounded-sm text-gray-700 bg-white hover:border-[#2f445f] hover:text-[#2f445f] transition-all flex items-center justify-center">

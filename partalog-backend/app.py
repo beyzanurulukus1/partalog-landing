@@ -73,6 +73,7 @@ def contact():
     name = sanitize_for_sheets(data.get('name', ''))
     email = sanitize_for_sheets(data.get('email', ''))
     company = sanitize_for_sheets(data.get('company', ''))
+    package_interest = sanitize_for_sheets(data.get('package_interest', ''))
     description = sanitize_for_sheets(data.get('description', ''))
     
     # 4. HONEYPOT (BOT) KONTROLÜ
@@ -82,10 +83,10 @@ def contact():
         return jsonify({"error": "Spam tespit edildi."}), 400
     
     # 5. MANTIKLI KARAKTER SINIRLARI
-    if not name or not email or not company:
+    if not name or not email or not company or not package_interest:
         return jsonify({"error": "Zorunlu alanlar eksik."}), 400
         
-    if len(name) > 100 or len(email) > 100 or len(company) > 100:
+    if len(name) > 100 or len(email) > 100 or len(company) > 100 or len(package_interest) > 100:
         return jsonify({"error": "İsim, e-posta veya şirket bilgisi 100 karakterden uzun olamaz."}), 400
         
     if len(description) > 1000:
@@ -104,16 +105,40 @@ def contact():
         "Ad Soyad": name,
         "Email": email,
         "Şirket": company,
+        "İlgilenilen Paket": package_interest,
         "Mesaj": description
+    }
+    # Geriye dönük uyumluluk: Script yeni alanı kabul etmiyorsa eski payload ile tekrar deneriz.
+    legacy_payload = {
+        "Ad Soyad": name,
+        "Email": email,
+        "Şirket": company,
+        "Mesaj": f"{description}\n\nİlgilenilen Paket: {package_interest}" if description else f"İlgilenilen Paket: {package_interest}"
     }
     
     try:
         response = requests.post(GOOGLE_SCRIPT_URL, data=payload, timeout=10)
-        
+
         if 200 <= response.status_code < 300:
             return jsonify({"success": True, "message": "Talebiniz başarıyla alındı."}), 200
         else:
-            logging.error(f"Google Sheets Hatası: Status Code {response.status_code}")
+            logging.error(
+                "Google Sheets primary payload failed. Status Code %s, Body: %s",
+                response.status_code,
+                response.text[:500]
+            )
+
+            # Yeni alanı henüz desteklemeyen script'ler için legacy fallback
+            legacy_response = requests.post(GOOGLE_SCRIPT_URL, data=legacy_payload, timeout=10)
+            if 200 <= legacy_response.status_code < 300:
+                logging.info("Google Sheets legacy payload succeeded after primary failure.")
+                return jsonify({"success": True, "message": "Talebiniz başarıyla alındı."}), 200
+
+            logging.error(
+                "Google Sheets legacy payload also failed. Status Code %s, Body: %s",
+                legacy_response.status_code,
+                legacy_response.text[:500]
+            )
             return jsonify({"error": "Kayıt işlemi sırasında bir sorun oluştu."}), 502
             
     except requests.exceptions.Timeout:

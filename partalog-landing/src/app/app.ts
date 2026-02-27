@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar';
 import { HeroComponent } from './components/hero/hero';
 import { LiveDemoComponent } from './components/live-demo/live-demo'; 
+import { PricingPlansComponent } from './components/pricing-plans/pricing-plans';
 import { TransformationComponent } from './components/transformation/transformation';
 import { FaqComponent } from './components/faq/faq';
 import { ContactComponent } from './components/contact/contact';
@@ -20,6 +21,7 @@ import * as AOS from 'aos';
     NavbarComponent, 
     HeroComponent, 
     LiveDemoComponent, 
+    PricingPlansComponent,
     TransformationComponent,
     FaqComponent,
     ContactComponent,

@@ -1,0 +1,71 @@
+<section id="plans" class="py-24 bg-white border-y border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <div class="mb-5">
+        <p class="mt-2 text-[15px] md:text-[18px] font-semibold uppercase tracking-[0.06em] text-[#1e2e42]">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#4a6a91] shadow-[0_0_0_5px_rgba(74,106,145,0.16)] mr-2 align-middle"></span>
+          {{ ts.currentLang() === 'tr' ? 'Fiyatlandırma Planları' : 'Pricing Plans' }}
+        </p>
+      </div>
+      <h2 class="font-heading text-4xl font-extrabold text-gray-900 sm:text-5xl tracking-tight">
+        {{ ts.currentLang() === 'tr' ? 'İşinize Uygun Hizmet Paketlerimiz' : 'Service Packages for Your Business' }}
+      </h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+        {{ ts.currentLang() === 'tr'
+          ? 'Katalog yazılımından AI destekli e-ticaret dönüşümüne kadar ihtiyacınıza göre ölçeklenebilir planlar.'
+          : 'Scalable plans from catalog software to AI-powered e-commerce transformation.' }}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <article *ngFor="let plan of plans; let i = index"
+               data-aos="fade-up"
+               [attr.data-aos-delay]="i * 120"
+               class="rounded-3xl border p-8 flex flex-col"
+               [ngClass]="
+                 i === 0 ? 'border-[#2f445f]/20 bg-[#eef4fb] shadow-lg' :
+                 i === 1 ? 'border-[#2f445f]/25 bg-[#f8fafc] shadow-xl' :
+                 'border-[#2f445f]/20 bg-[#f1f6ff] shadow-lg'
+               ">
+        <span class="inline-flex w-max px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.14em]"
+              [ngClass]="
+                i === 0 ? 'bg-[#4a6a91] text-white' :
+                i === 1 ? 'bg-[#2f445f] text-white' :
+                'bg-[#1e2e42] text-white'
+              ">
+          {{ ts.currentLang() === 'tr' ? plan.badgeTr : plan.badgeEn }}
+        </span>
+
+        <h3 class="mt-5 font-heading text-2xl font-bold text-gray-900">
+          {{ ts.currentLang() === 'tr' ? plan.titleTr : plan.titleEn }}
+        </h3>
+
+        <p class="mt-3 text-gray-600 leading-relaxed min-h-[72px]">
+          {{ ts.currentLang() === 'tr' ? plan.descTr : plan.descEn }}
+        </p>
+
+        <ul class="mt-6 space-y-3">
+          <li *ngFor="let point of (ts.currentLang() === 'tr' ? plan.pointsTr : plan.pointsEn)"
+              class="flex items-start gap-2 text-sm text-gray-700">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#2f445f] mt-2"></span>
+            <span>{{ point }}</span>
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="mt-14" data-aos="fade-up" data-aos-delay="120">
+      <div class="max-w-4xl mx-auto text-center rounded-3xl border border-[#2f445f]/20 bg-gradient-to-b from-[#f8fbff] to-white px-6 py-10 md:px-10 md:py-12 shadow-[0_24px_50px_-28px_rgba(47,68,95,0.4)]">
+        <p class="font-heading text-[17px] md:text-[21px] text-[#1e2e42] leading-relaxed tracking-[0.01em]">
+          {{ ts.currentLang() === 'tr'
+            ? 'Saha operasyonlarınızı ve e-ticaret altyapınızı yapay zeka ile uçtan uca dönüştürmeye hazır mısınız? Yukarıdaki paketlerimizden işletmenizin ölçeğine en uygun olanı birlikte belirleyelim. Size özel mimariyi planlamak ve sistemi canlı olarak incelemek için hemen bir demo talep edin.'
+            : 'Are you ready to transform your field operations and e-commerce infrastructure end-to-end with AI? Let\'s identify together the package above that best fits your business scale. Request a demo now to plan your custom architecture and review the system live.' }}
+        </p>
+        <a href="#contact"
+           class="mt-7 inline-flex items-center justify-center px-9 py-3.5 bg-[#2f445f] text-white text-sm font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-[#1e2e42] transition-all transform hover:-translate-y-0.5 shadow-lg">
+          {{ ts.currentLang() === 'tr' ? 'Demo Talep Et' : 'Request Demo' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
